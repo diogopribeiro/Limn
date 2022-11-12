@@ -51,6 +51,8 @@ extension UIControl.State: CustomLimnRepresentable {
     }
 }
 
+#if !os(tvOS)
+
 extension UIDeviceOrientation: CustomLimnRepresentable {
 
     public static var customLimnTypeName: String {
@@ -74,6 +76,8 @@ extension UIDeviceOrientation: CustomLimnRepresentable {
         return .enum(name: Limn.typeName(of: self), caseName: caseName, associatedValue: nil)
     }
 }
+
+#endif
 
 extension UIGestureRecognizer.State: CustomLimnRepresentable {
 
