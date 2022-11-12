@@ -72,7 +72,7 @@ final class LimnKeyValueTests: XCTestCase {
         var modelAfter = modelBefore
         modelAfter[0] = Array(modelAfter[0].dropFirst())
         modelAfter.append(["New Element"])
-        let limn = Limn(of: modelBefore).diffed(to: .init(of: modelAfter))
+        let limn = Limn(of: modelBefore).diffed(to: modelAfter)
 
         XCTAssertEqualLimns(
             limn[0],

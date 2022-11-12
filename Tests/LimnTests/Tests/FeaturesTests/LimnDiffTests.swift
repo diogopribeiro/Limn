@@ -4,6 +4,8 @@ import XCTest
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 final class LimnDiffTests: XCTestCase {
 
+    // MARK: Diffing by type test cases
+
     func testClassDiff() {
 
         let classA = SwiftClass.Simple()
@@ -527,6 +529,19 @@ final class LimnDiffTests: XCTestCase {
                 original: .omitted(reason: .maxDepthExceeded),
                 update: .omitted(reason: .filtered)
             ).limnValue
+        )
+    }
+
+    // MARK: Other test cases
+
+    func testPassingValueToDiffedIsEqualToPassingLimnOfValue() {
+
+        let collectionA: [AnyHashable] = [1, 2, [5, 6   ], 4]
+        let collectionB: [AnyHashable] = [1, 2, [   6, 7], 4]
+
+        XCTAssertEqualLimns(
+            Limn(of: collectionA).diffed(to: collectionB),
+            Limn(of: collectionA).diffed(to: Limn(of: collectionB))
         )
     }
 }

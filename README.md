@@ -54,7 +54,7 @@ dump(supportedHTTPStatusCodes)
 >         - value: "OK"
 > ```
 
-Limn was originally developed as a more concise alternative to `dump()`. Its default output style is similar to Swift code, making it easier to inspect the contents of a value:
+Limn was originally developed as a more concise alternative to `dump()`. Its default output style is similar to Swift code, which makes it easier to inspect the contents of a value:
 
 ```swift
 Limn(of: supportedHTTPStatusCodes).sorted().dump()
@@ -92,7 +92,7 @@ Limn(of: playerInfo).dump(format: .json(minified: false))
 > }
 > ```
 
-Contrary to `dump()`, Limn can also extract the contents of Objective-C values. It does so using the [Runtime](https://developer.apple.com/documentation/objectivec/objective-c_runtime) API, in addition to the [Mirror](https://developer.apple.com/documentation/swift/mirror) API used for Swift values:
+Contrary to `dump()`, Limn can also properly extract the contents of Objective-C values. It does so using the [Runtime](https://developer.apple.com/documentation/objectivec/objective-c_runtime) API, in addition to the [Mirror](https://developer.apple.com/documentation/swift/mirror) API used for Swift values:
 
 ```swift
 Limn(of: UIView(), maxDepth: 3).sorted().dump(format: .init(maxItems: 4))
@@ -137,7 +137,7 @@ Limn.diff(from: before, to: after).dump()
 >   )
 > ```
 
-`Limn`s can be persisted on the app's container. This may be useful to store certain values for later comparison:
+`Limn`s can be persisted on the app's container, which may be useful to store certain values for later comparison:
 
 ```swift
 struct MainView: View {
@@ -181,7 +181,7 @@ struct MainView: View {
 > 
 > ```
 
-The contents of a `Limn` hierarchy can also be filtered. At the moment it's possible to filter by either the value and/or its display style:
+Contents of a `Limn` hierarchy can also be filtered. At the moment it's possible to apply a filter by either the value and/or its display style:
 
 ```swift
 Limn(of: Self.supportedStatusCodes).filtered(value: "503").dump()
@@ -210,7 +210,7 @@ Limn(of: UIView())["_inferredLayoutMargins"]?.dump()
 > )
 > ```
 
-You can also gather statistics and similar information using the `stats()` method:
+Statistics and similar information can be gathered using the `stats()` method:
 
 ```swift
 Limn(of: UIViewController()).stats()
@@ -235,8 +235,6 @@ Other minor features include support for undiffing and sorting of (non-indexed) 
 
 ## Installation
 
-You can checkout and import Limn directly into your project or use a dependency manager (Swift Package Manager or Cocoapods).
-
 To import Limn with [Swift Package Manager](https://www.swift.org/package-manager/), simply add the folowing dependency on your `Package.swift`:
 ```swift
 dependencies: [
@@ -255,7 +253,7 @@ pod 'Limn', :git => 'https://github.com/diogopribeiro/Limn.git'
 
 The representation of a type (and its children) can be fully customized in case you're not happy with the defaults. By conforming the desired type to the `CustomLimnRepresentable` protocol you can:
 
-- Change its type name by implementing the static property `customLimnTypeName`;
+- Adjust its type name by implementing the static property `customLimnTypeName`;
 - Return a fully customized `Limn` for an instance by implementing method `customLimn(defaultLimn:context:)`.
 
 Example:
@@ -309,7 +307,7 @@ The default output format used by `.dump()`/`.stringDump()` can be modified by a
 
 ## Contributing
 
-All contributions are welcome! You can open an issue first if you wish to discuss some topic prior to the development and submission.
+All contributions are welcome! You can open a discussion first if you wish to talk about some topic prior to the development and submission.
 Please try to match the existing code style if you open a PR.
 
 ## License

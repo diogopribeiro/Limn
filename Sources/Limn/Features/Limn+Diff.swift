@@ -93,19 +93,20 @@ extension Limn {
         return originalLimn.diffed(to: updateLimn)
     }
 
-    /// Inserts diffing information to this `Limn` based on the differences to another, newer instance.
+    /// Inserts diffing information to this `Limn` based on the differences to another value.
     ///
     /// If the calling `Limn` contains diffing information, it will be reverted (undiffed) to the original value before
-    /// performing the diff. If the passed `Limn` contains diffing information, it will be reverted (undiffed) to the
-    /// updated value before performing the diff. If you wish for a different behavior, use the method `undiffed(to:)`
-    /// to revert the changes on either `Limn` value before passing it to this method.
+    /// performing the diff. If the passed value is a `Limn` with diffing information, it will be reverted (undiffed) to
+    /// the updated value before performing the diff. If you wish for a different behavior, use the method
+    /// `undiffed(to:)` to revert the changes on either `Limn` value prior to passing it to this method.
     ///
     /// - Parameter update: The updated `Limn` to compare to.
     /// - Returns: The current `Limn` with diffing information added to it, or `self` if no changes were found.
-    public func diffed(to update: Self) -> Limn {
+    public func diffed<T>(to update: T) -> Limn {
 
         let original = containsDiff ? undiffed(to: .original) : self
-        let update = update.containsDiff ? update.undiffed(to: .update) : update
+        let updateLimn: Limn = update as? Limn ?? Limn(of: update)
+        let update = updateLimn.containsDiff ? updateLimn.undiffed(to: .update) : updateLimn
 
         if let original = original, let update = update {
             return original.diffedRecursively(to: update)
