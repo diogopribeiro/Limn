@@ -4,7 +4,7 @@
 <a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/cocoapods/p/Limn.svg"></a>
 <a href="https://github.com/groue/GRDB.swift/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/DiogPR/Limn.svg?maxAge=2592000"></a>
 
-Limn is a Swift library for inspecting and comparing values in Swift and Objective-C. It was conceived as a more concise and complete alternative to Swift's `dump()` and over time it gained other helpful features for debugging and reverse-engineering such as support for persistence, diffing and filtering of child elements.
+Limn is a Swift library for inspecting and comparing values in Swift and Objective-C. It was conceived as a more concise and complete alternative to Swift's `dump()` and over time it gained other helpful features for debugging such as support for persistence, diffing and filtering of child elements.
 
 1. [Overview](#overview)
 1. [Installation](#installation)
@@ -288,7 +288,7 @@ Limn provides [several implementations](Sources/Limn/Customization/BuiltIn/) of 
 
 #### `DumpFormat`
 
-The default output format used by `.dump()`/`.stringDump()` can be modified by adjusting properties of `Limn.DumpFormat.default` (e.g. `Limn.DumpFormat.default.maxItems = 4`). To create a reusable format, add an extension of `Limn.DumpFormat` and declare your style as a static property returning `Self`. This format can then be used by passing it to methods `.dump(format:)`/`.stringDump(format:)`.
+The default output format used by `.dump()`/`.stringDump()` can be modified by adjusting properties of `Limn.DumpFormat.default` (e.g. `Limn.DumpFormat.default.maxItems = 4`). To create a reusable format, add an extension of `Limn.DumpFormat` and declare your style as a static property returning `Self`. This format can then be passed to methods `.dump(format:)` and `.stringDump(format:)`.
 
 ## Known issues and limitations
 
