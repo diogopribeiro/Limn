@@ -54,7 +54,7 @@ dump(supportedHTTPStatusCodes)
 >         - value: "OK"
 > ```
 
-Limn was originally developed as a more concise alternative to `dump()`. Its default output style is similar to Swift code, which makes it easier to inspect the contents of a value:
+Limn was originally developed as a more concise alternative to `dump()`. Its default output style is similar to Swift code, which is shorter and easier to read:
 
 ```swift
 Limn(of: supportedHTTPStatusCodes).sorted().dump()
@@ -92,7 +92,7 @@ Limn(of: playerInfo).dump(format: .json(minified: false))
 > }
 > ```
 
-Contrary to `dump()`, Limn can also properly extract the contents of Objective-C values. It does so using the [Runtime](https://developer.apple.com/documentation/objectivec/objective-c_runtime) API, in addition to the [Mirror](https://developer.apple.com/documentation/swift/mirror) API used for Swift values:
+Contrary to `dump()`, Limn can also properly extract the contents of Objective-C values using the [Runtime](https://developer.apple.com/documentation/objectivec/objective-c_runtime) API (in addition to the [Mirror](https://developer.apple.com/documentation/swift/mirror) API used for Swift values):
 
 ```swift
 Limn(of: UIView(), maxDepth: 3).sorted().dump(format: .init(maxItems: 4))
@@ -181,7 +181,7 @@ struct MainView: View {
 > 
 > ```
 
-Contents of a `Limn` hierarchy can also be filtered. At the moment it's possible to apply a filter by either the value and/or its display style:
+Contents of a `Limn` hierarchy can also be filtered by either a value's description and/or its display style:
 
 ```swift
 Limn(of: Self.supportedStatusCodes).filtered(value: "503").dump()
@@ -196,7 +196,7 @@ Limn(of: Self.supportedStatusCodes).filtered(value: "503").dump()
 > ]
 > ```
 
-Specific child values or collection elements can be selected with a key subscript. This can be particularly useful to isolate inaccessible child properties from their accessible parents or to access specific elements on overly large collections:
+Specific child values or collection elements can be selected using a key subscript. This can be particularly useful to isolate inaccessible child properties from their accessible parents or to access specific elements on overly large collections:
 
 ```swift
 Limn(of: UIView())["_inferredLayoutMargins"]?.dump()
@@ -210,7 +210,7 @@ Limn(of: UIView())["_inferredLayoutMargins"]?.dump()
 > )
 > ```
 
-Statistics and similar information can be gathered using the `stats()` method:
+Statistics and similar information can be gathered using the `.stats()` method:
 
 ```swift
 Limn(of: UIViewController()).stats()
@@ -235,16 +235,12 @@ Other minor features include support for undiffing and sorting of (non-indexed) 
 
 ## Installation
 
-To import Limn with [Swift Package Manager](https://www.swift.org/package-manager/), simply add the folowing dependency on your `Package.swift`:
-```swift
-dependencies: [
-    .package(url: "https://github.com/diogopribeiro/Limn.git", from: "0.1.0")
-]
-```
+Limn can be added to your project using [Swift Package Manager](https://www.swift.org/package-manager/), [CocoaPods](https://cocoapods.org/) or as an Xcode subproject.
 
 To import Limn with [Cocoapods](https://cocoapods.org/), add the following dependency to your `Podfile`:
+
 ```podspec
-pod 'Limn', :git => 'https://github.com/diogopribeiro/Limn.git'
+pod 'Limn'
 ```
 
 ## Customization
@@ -298,7 +294,7 @@ The default output format used by `.dump()`/`.stringDump()` can be modified by a
     - watchOS 6.0
     - tvOS 13.0
   
-- Objective-C support is incomplete as of v0.1.0. Less common data types will not be parsed.
+- Objective-C support is incomplete as of v0.9.0. Less common data types will not be parsed.
 
 - Due to limitations of the language, it's not possible to obtain Swift-like fully qualified names from Objective-C types (e.g. a `UIKit.UIControl.State` value is identified as `__C.UIControlState` by default).
     - This can be fixed by customizing the type name though `CustomLimnRepresentable`. Several extensions are provided in the [`Customization/BuiltIn`](Sources/Limn/Customization/BuiltIn) folder.
