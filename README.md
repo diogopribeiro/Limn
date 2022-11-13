@@ -294,7 +294,7 @@ The default output format used by `.dump()`/`.stringDump()` can be modified by a
     - watchOS 6.0
     - tvOS 13.0
   
-- Objective-C support is incomplete as of v0.9.0. Less common data types will not be parsed.
+- Objective-C support is incomplete as of v0.9.X. Less common data types will not be parsed.
 
 - Due to limitations of the language, it's not possible to obtain Swift-like fully qualified names from Objective-C types (e.g. a `UIKit.UIControl.State` value is identified as `__C.UIControlState` by default).
     - This can be fixed by customizing the type name though `CustomLimnRepresentable`. Several extensions are provided in the [`Customization/BuiltIn`](Sources/Limn/Customization/BuiltIn) folder.
