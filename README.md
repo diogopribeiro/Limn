@@ -1,7 +1,7 @@
 # Limn
 
 <a href="https://developer.apple.com/swift/"><img alt="Swift 5.6" src="https://img.shields.io/badge/swift-5.6-orange.svg?style=flat"></a>
-<a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/badge/platforms-iOS%20%7C%20MacOS%20%7C%20WatchOS%20%7C%20tvOS-lightgrey"></a>
+<a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20watchOS%20%7C%20tvOS-lightgrey"></a>
 <a href="https://github.com/diogopribeiro/Limn/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/diogopribeiro/Limn.svg"></a>
 
 Limn is a Swift library for inspecting and comparing values in Swift and Objective-C. It was conceived as a more concise and complete alternative to Swift's `dump()` and over time it gained other helpful features for debugging such as support for persistence, diffing and filtering of child elements.
