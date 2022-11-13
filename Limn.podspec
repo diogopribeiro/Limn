@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage    = "https://github.com/diogopribeiro/Limn"
   s.platforms   = { :ios => "11.0", :osx => "10.13", :watchos => "4.0", :tvos => "11.0" }
 
-  s.source              = { :git => 'https://github.com/diogopribeiro/Limn.git', :tag => "v#{s.version}" }
+  s.source              = { :git => 'https://github.com/diogopribeiro/Limn.git', :tag => s.version }
   s.source_files        = "Sources/**/*.{h,m,mm,swift}"
   s.swift_versions      = ['5.6']
   s.public_header_files = "Sources/**/*.{h}"
