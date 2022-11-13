@@ -11,10 +11,22 @@ let package = Package(
         .tvOS(.v11),
     ],
     products: [
-        .library(name: "Limn", targets: ["Limn"]),
+        .library(
+            name: "Limn",
+            targets: ["Limn"]
+        ),
     ],
     targets: [
-        .target(name: "Limn", dependencies: []),
-        .testTarget(name: "LimnTests", dependencies: ["Limn"]),
+        .target(
+            name: "Limn",
+            dependencies: [],
+            exclude: [
+                "Limn.podspec"
+            ]
+        ),
+        .testTarget(
+            name: "LimnTests",
+            dependencies: ["Limn"]
+        ),
     ]
 )
