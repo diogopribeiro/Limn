@@ -6,6 +6,9 @@ Pod::Spec.new do |s|
   
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.summary = 'A Swift library for inspecting and comparing values in Swift and Objective-C.'
+  s.description = 'Limn is a Swift library for inspecting and comparing values in Swift and Objective-C. It was
+  conceived as a more concise and complete alternative to Swift\'s dump() and over time it gained other helpful
+  features for debugging such as support for persistence, diffing and filtering of child elements.'
   s.homepage = 'https://github.com/diogopribeiro/Limn'
   s.author = { 'Diogo Pereira Ribeiro' => 'diogopribeiro.apps@gmail.com' }
   s.source = { :git => 'https://github.com/diogopribeiro/Limn.git', :tag => "#{s.version}" }
