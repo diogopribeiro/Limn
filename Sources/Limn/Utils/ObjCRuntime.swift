@@ -93,7 +93,7 @@ enum ObjCRuntime {
                         guard
                             let ivarName = ivar_getName(ivar).map(String.init(cString:)),
                             let ivarEncoding = ivar_getTypeEncoding(ivar).map(String.init(cString:)),
-                            !ivarEncoding.isEmpty && ivarName != "isa" // Skip Swift properties and ISA pointers.
+                            !ivarEncoding.isEmpty && ivarName != "isa" // Skip Swift properties and "is a" pointers.
                         else {
                             return nil
                         }
