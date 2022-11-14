@@ -68,9 +68,9 @@ extension StringProtocol {
     }
 }
 
-extension UnsafeMutableRawPointer {
+extension UnsafeRawPointer {
 
-    func alignedUp<T>(for type: T.Type) -> UnsafeMutableRawPointer {
+    func alignedUp<T>(for type: T.Type) -> Self {
 
         let stride = MemoryLayout<T>.stride
         let offset = Int(bitPattern: self) % stride
