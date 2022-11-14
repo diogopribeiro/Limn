@@ -19,10 +19,7 @@ let package = Package(
     targets: [
         .target(
             name: "Limn",
-            dependencies: [],
-            exclude: [
-                "Limn.podspec"
-            ]
+            dependencies: []
         ),
         .testTarget(
             name: "LimnTests",

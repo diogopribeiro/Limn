@@ -54,7 +54,7 @@ dump(supportedHTTPStatusCodes)
 >         - value: "OK"
 > ```
 
-Limn was originally developed as a more concise alternative to `dump()`. Its default output style is similar to Swift code, which is shorter and easier to read:
+Limn was originally developed as a more concise alternative to `dump()`. Its default output style is similar to Swift code, which is typically shorter and easier to read:
 
 ```swift
 Limn(of: supportedHTTPStatusCodes).sorted().dump()
@@ -117,7 +117,7 @@ Limn(of: UIView(), maxDepth: 3).sorted().dump(format: .init(maxItems: 4))
 > ) @ 0x00012f10e5e0
 > ```
 
-Two values can be compared using `.diff(to:)` or `Limn.diff(from:to:)`. These methods return a `Limn` instance containing both the original and updated values, which can then be printed as a git-style diff:
+Two values can be compared using `.diff(to:)` or `Limn.diff(from:to:)`. These methods return a `Limn` instance containing both the original and updated values, which are printed as a git-style diff by default:
 
 ```swift
 let before = Player(name: "Tomas", highScore: 17126, history: [12703, 11945, 17126])
@@ -178,13 +178,13 @@ struct MainView: View {
 > +         _seed: 68
 >       ),
 >       … (5 unchanged)
-> 
+>   )
 > ```
 
 Contents of a `Limn` hierarchy can also be filtered by either a value's description and/or its display style:
 
 ```swift
-Limn(of: Self.supportedStatusCodes).filtered(value: "503").dump()
+Limn(of: supportedHTTPStatusCodes).filtered(value: "503").dump()
 ```
 > ```swift
 > [
@@ -196,14 +196,14 @@ Limn(of: Self.supportedStatusCodes).filtered(value: "503").dump()
 > ]
 > ```
 
-Specific child values or collection elements can be selected using a key subscript. This can be particularly useful to isolate inaccessible child properties from their accessible parents or to access specific elements on overly large collections:
+Specific child values or collection elements can be selected using a subscript. This can be particularly useful to isolate inaccessible child properties from their accessible parents or to access specific elements on overly large collections:
 
 ```swift
 Limn(of: UIView())["_inferredLayoutMargins"]?.dump()
 ```
 > ```swift
 > UIEdgeInsets(
->     top: 0.0,
+>     top: 42.0,
 >     left: 8.0,
 >     bottom: 16.0,
 >     right: 8.0
@@ -284,7 +284,7 @@ Limn provides [several implementations](Sources/Limn/Customization/BuiltIn/) of 
 
 #### `DumpFormat`
 
-The default output format used by `.dump()`/`.stringDump()` can be modified by adjusting properties of `Limn.DumpFormat.default` (e.g. `Limn.DumpFormat.default.maxItems = 4`). To create a reusable format, add an extension of `Limn.DumpFormat` and declare your style as a static property returning `Self`. This format can then be passed to methods `.dump(format:)` and `.stringDump(format:)`.
+The default output format used by `.dump()` and `.stringDump()` can be modified by adjusting properties of `Limn.DumpFormat.default` (e.g. `Limn.DumpFormat.default.maxItems = 4`). To create a reusable format, add an extension of `Limn.DumpFormat` and declare your style as a static property returning `Self`. This format can then be passed to methods `.dump(format:)` and `.stringDump(format:)`.
 
 ## Known issues and limitations
 
@@ -294,7 +294,7 @@ The default output format used by `.dump()`/`.stringDump()` can be modified by a
     - watchOS 6.0
     - tvOS 13.0
   
-- Objective-C support is incomplete as of v0.9.X. Less common data types will not be parsed.
+- Objective-C support is incomplete as of v0.9.X. Some less common data types will not be parsed.
 
 - Due to limitations of the language, it's not possible to obtain Swift-like fully qualified names from Objective-C types (e.g. a `UIKit.UIControl.State` value is identified as `__C.UIControlState` by default).
     - This can be fixed by customizing the type name though `CustomLimnRepresentable`. Several extensions are provided in the [`Customization/BuiltIn`](Sources/Limn/Customization/BuiltIn) folder.
