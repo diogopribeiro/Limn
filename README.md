@@ -196,7 +196,7 @@ Limn(of: supportedHTTPStatusCodes).filtered(value: "503").dump()
 > ]
 > ```
 
-Specific child values or collection elements can be selected using a String/Int subscript. This can be particularly useful to isolate inaccessible child properties from their accessible parents or to access specific elements on overly large collections:
+Specific child values or collection elements can be selected using a subscript. This can be particularly useful to isolate inaccessible child properties from their accessible parents or to access specific elements on overly large collections:
 
 ```swift
 Limn(of: UIView())["_inferredLayoutMargins"]?.dump()
@@ -294,7 +294,7 @@ The default output format used by `.dump()` and `.stringDump()` can be modified 
     - watchOS 6.0
     - tvOS 13.0
   
-- Objective-C support is incomplete as of v0.9.X. A handful of less common data types will not be parsed.
+- Objective-C support is incomplete as of v0.9.X. Some less common data types will not be parsed.
 
 - Due to limitations of the language, it's not possible to obtain Swift-like fully qualified names from Objective-C types (e.g. a `UIKit.UIControl.State` value is identified as `__C.UIControlState` by default).
     - This can be fixed by customizing the type name though `CustomLimnRepresentable`. Several extensions are provided in the [`Customization/BuiltIn`](Sources/Limn/Customization/BuiltIn) folder.
