@@ -8,7 +8,7 @@ extension Limn {
         public let maxDepth: Int
         public let parentClassAddresses: Set<String>
 
-        func addingParentClassAddress(_ address: String) -> (duplicateFound: Bool, updatedContext: Self) {
+        func addingClassAddress(_ address: String) -> (duplicateFound: Bool, updatedContext: Self) {
 
             var newParentClassAddresses = parentClassAddresses
             let duplicateFound = !newParentClassAddresses.insert(address).inserted
@@ -115,7 +115,7 @@ extension Limn {
             return
         }
 
-        let (duplicateClassFound, context) = context.addingParentClassAddress(address)
+        let (duplicateClassFound, context) = context.addingClassAddress(address)
         guard !duplicateClassFound else {
             self = .class(name: name, address: address, properties: [.omitted(reason: .referenceCycleDetected)])
             return

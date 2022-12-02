@@ -25,13 +25,13 @@ extension Limn {
         self = Self.decode(nsValue: value)
     }
 
-    // MARK: - Helpers
+    // MARK: - Type decoding
 
     private static func decode(nsValue: NSValue) -> Limn {
 
         func getValue<T>(using value: T) -> Limn {
             var valueCopy = value
-            nsValue.getValue(&valueCopy, size: MemoryLayout<T>.stride)
+            nsValue.getValue(&valueCopy, size: MemoryLayout<T>.size)
             return .value(description: "\(valueCopy)")
         }
 
@@ -86,12 +86,38 @@ extension Limn {
 
         case 4:
             let valueBytes = pointer.load(as: (CChar, CChar, CChar, CChar).self)
-            let value = CShort(valueBytes.0) + CShort(valueBytes.1) << 8 +
-                CShort(valueBytes.2) << 16 + CShort(valueBytes.3) << 24
+            let value = CShort(valueBytes.0) + CShort(valueBytes.1) << 8 + CShort(valueBytes.2) << 16 +
+                CShort(valueBytes.3) << 24
+            return (.value(description: "\(String(value, radix: 2))"), readBytes)
+
+        case 5:
+            let valueBytes = pointer.load(as: (CChar, CChar, CChar, CChar, CChar).self)
+            let value = CShort(valueBytes.0) + CShort(valueBytes.1) << 8 + CShort(valueBytes.2) << 16 +
+                CShort(valueBytes.3) << 24 + CShort(valueBytes.4) << 32
+            return (.value(description: "\(String(value, radix: 2))"), readBytes)
+
+        case 6:
+            let valueBytes = pointer.load(as: (CChar, CChar, CChar, CChar, CChar, CChar).self)
+            let value = CShort(valueBytes.0) + CShort(valueBytes.1) << 8 + CShort(valueBytes.2) << 16 +
+                CShort(valueBytes.3) << 24 + CShort(valueBytes.4) << 32 + CShort(valueBytes.5) << 40
+            return (.value(description: "\(String(value, radix: 2))"), readBytes)
+
+        case 7:
+            let valueBytes = pointer.load(as: (CChar, CChar, CChar, CChar, CChar, CChar, CChar).self)
+            let value = CShort(valueBytes.0) + CShort(valueBytes.1) << 8 + CShort(valueBytes.2) << 16 +
+                CShort(valueBytes.3) << 24 + CShort(valueBytes.4) << 32 + CShort(valueBytes.5) << 40 +
+                CShort(valueBytes.6) << 48
+            return (.value(description: "\(String(value, radix: 2))"), readBytes)
+
+        case 8:
+            let valueBytes = pointer.load(as: (CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar).self)
+            let value = CShort(valueBytes.0) + CShort(valueBytes.1) << 8 + CShort(valueBytes.2) << 16 +
+                CShort(valueBytes.3) << 24 + CShort(valueBytes.4) << 32 + CShort(valueBytes.5) << 40 +
+                CShort(valueBytes.6) << 48 + CShort(valueBytes.7) << 56
             return (.value(description: "\(String(value, radix: 2))"), readBytes)
 
         default:
-            assertionFailure()
+            // assertionFailure("Bit fields with size '\(bitFieldSize)' not yet supported")
             return (.omitted(reason: .unresolved), readBytes)
         }
     }
@@ -161,7 +187,7 @@ extension Limn {
 
         let pointeeValue = pointer.alignedUp(for: uintptr_t.self).load(as: uintptr_t.self)
         guard pointeeValue != 0 else {
-            return (.optional(value: nil), MemoryLayout<uintptr_t>.stride)
+            return (.optional(value: nil), MemoryLayout<uintptr_t>.size)
         }
 
         let pointee = UnsafeRawPointer(bitPattern: pointeeValue)!
@@ -252,7 +278,7 @@ extension Limn {
 
             let alignedPointer = pointer.alignedUp(for: T.self)
             let value = alignedPointer.load(as: T.self)
-            let readBytes = MemoryLayout<T>.stride + (alignedPointer - pointer)
+            let readBytes = MemoryLayout<T>.size + (alignedPointer - pointer)
 
             return (.value(description: "\(value)"), readBytes)
         }
@@ -278,13 +304,7 @@ extension Limn {
             return (.value(description: address), 8)
 
         case "#":
-            return Self.decode(objCClassWithPointer: pointer, typeEncoding: typeEncoding, context: context)
-
-        case _ where typeEncoding.starts(with: "^"):
-            return Self.decode(objCPointer: pointer, typeEncoding: typeEncoding, context: context)
-
-        case _ where typeEncoding.starts(with: "@"):
-            return Self.decode(objCObjectWithPointer: pointer, typeEncoding: typeEncoding, context: context)
+            return Self.decode(objCClassWithPointer: pointer, context: context)
 
         case _ where typeEncoding.starts(with: "("):
             return Self.decode(objCUnionWithPointer: pointer, typeEncoding: typeEncoding, context: context)
@@ -294,6 +314,12 @@ extension Limn {
 
         case _ where typeEncoding.starts(with: "{"):
             return Self.decode(objCStructWithPointer: pointer, typeEncoding: typeEncoding, context: context)
+
+        case _ where typeEncoding.starts(with: "^"):
+            return Self.decode(objCPointer: pointer, typeEncoding: typeEncoding, context: context)
+
+        case _ where typeEncoding.starts(with: "@"):
+            return Self.decode(objCObjectWithPointer: pointer, typeEncoding: typeEncoding, context: context)
 
         case _ where typeEncoding.starts(with: "A"):
             let typeEncoding = String(typeEncoding.dropFirst())
