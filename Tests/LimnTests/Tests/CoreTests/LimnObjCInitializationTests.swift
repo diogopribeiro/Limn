@@ -9,6 +9,7 @@ final class LimnObjCInitializationTests: XCTestCase {
         test(ObjCClass.simple)
         test(ObjCClass.simpleSubclass)
         test(ObjCClass.simpleSubSubclass)
+        test(ObjCClass.simpleClassCluster)
         test(ObjCClass.complex)
     }
 
