@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   s.name = 'Limn'
   s.module_name = 'Limn'
-  s.version = '0.9.2'
+  s.version = '0.9.3'
   
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.summary = 'A Swift library for inspecting and comparing values in Swift and Objective-C.'

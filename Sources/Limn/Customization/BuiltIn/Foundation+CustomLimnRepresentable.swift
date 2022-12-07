@@ -7,17 +7,7 @@ extension NSString: CustomLimnRepresentable {
     }
 
     public func customLimn(defaultLimn: () -> Limn, context: Limn.InitContext) -> Limn {
-
-        .class(
-            name: Limn.typeName(of: self),
-            address: Limn.address(of: self),
-            properties: [
-                .init(
-                    "_stringRepresentation",
-                    .value(description: "\"\(self.description)\"")
-                )
-            ]
-        )
+        .value(description: "\"\(self)\"")
     }
 }
 

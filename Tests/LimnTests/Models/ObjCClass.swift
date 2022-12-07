@@ -71,6 +71,19 @@ enum ObjCClass {
         )
     )
 
+    private static let simpleClassClusterInstance = NSURL(string: "http://foo.com")!
+    static let simpleClassCluster: TestModel<NSURL> = (
+        simpleClassClusterInstance,
+        .class(
+            name: "Foundation.NSURL",
+            address: Limn.address(of: simpleClassClusterInstance),
+            properties: [
+                .init("_baseURL", .optional(value: nil)),
+                .init("_urlString", .value(description: "\"http://foo.com\""))
+            ]
+        )
+    )
+
     // MARK: - Complex classes
 
     final class Complex<X: ExpressibleByIntegerLiteral, Y: Collection>: Simple {
