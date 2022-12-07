@@ -124,15 +124,17 @@ extension Limn {
 
     private static func decode(
         objCClassWithPointer pointer: UnsafeRawPointer,
-        typeEncoding: String,
         context: InitContext
     ) -> (value: Limn, readBytes: Int) {
 
-        let alignedPointer = pointer.alignedUp(for: NSString.self)
-        let value = alignedPointer.load(as: NSString.self)
-        let readBytes = MemoryLayout<NSString>.stride + (alignedPointer - pointer)
+        // TODO: Finish this
 
-        return (.value(description: "\(value).Type"), readBytes)
+        let alignedPointer = pointer.alignedUp(for: uintptr_t.self)
+//        let _ = alignedPointer.load(as: uintptr_t.self)
+        let className = "?.Type" // ObjCRuntime.className(for: classPointer) ?? "<unknown>"
+        let readBytes = MemoryLayout<NSString>.size + (alignedPointer - pointer)
+
+        return (.value(description: "\(className).Type"), readBytes)
     }
 
     private static func decode(
@@ -171,12 +173,15 @@ extension Limn {
         context: InitContext
     ) -> (value: Limn, readBytes: Int) {
 
-        // TODO: Decoding of objects
+        let readBytes = MemoryLayout<uintptr_t>.size
 
-//        let className = String(typeEncoding.dropFirst(2).dropLast())
-//        let classType: AnyClass = NSClassFromString(className)!
+        guard let object = pointer.load(as: NSObject?.self) else {
+            return (.optional(value: nil), readBytes)
+        }
+        let objectMirror = Mirror(reflecting: object)
+        let objectLimn = Limn(of: object, mirror: objectMirror, context: context)
 
-        return (.omitted(reason: .unresolved), 8)
+        return (objectLimn, readBytes)
     }
 
     private static func decode(
@@ -329,8 +334,8 @@ extension Limn {
             return Self.decode(objCBitFieldWithPointer: pointer, typeEncoding: typeEncoding, context: context)
 
         default:
-            assertionFailure("Type encoding '\(typeEncoding)' not yet supported")
-            let pointerOffset = MemoryLayout<uintptr_t>.stride
+            // assertionFailure("Type encoding '\(typeEncoding)' not yet supported")
+            let pointerOffset = MemoryLayout<uintptr_t>.size
             return (.omitted(reason: .unresolved), pointerOffset)
         }
     }
