@@ -28,8 +28,8 @@ extension Limn {
         var limnValue: Limn {
 
             // A `Limn` for this struct will be created manually as it will store other existing Limns. Using the
-            // default `Limn(of:)` initializer would create a Limn describing another Limn. It's also not possible to
-            // store `nil` properties in a `Limn` (by design), so we'll manually omit `nil` values instead.
+            // default `Limn(of:)` initializer would create a Limn describing another Limn. It's also not possible (by
+            // design) to store `nil` properties in a `Limn`, so we'll manually omit `nil` values instead.
 
             let name = typeName(of: self)
             var properties = [LabeledLimn]()
@@ -83,14 +83,31 @@ extension Limn {
     ///   - update: The updated value to compare to.
     ///   - maxDepth: The maximum level of recursion to use when resolving the `Limn` of child members of the passed
     ///     instance. Child values beyond this level will always be equal to `.omitted(reason: .maxDepthExceeded)`. The
-    ///     default value for this property is `Int.max`.     
+    ///     default value for this property is `Int.max`.
     /// - Returns: A `Limn` with the contents of and differences between the two values.
+    @available(*, deprecated, message: "Use `init(from:to:) instead`")
     public static func diff<T>(from original: T, to update: T, maxDepth: Int = .max) -> Limn {
 
         let originalLimn = Limn(of: original, maxDepth: maxDepth)
         let updateLimn = Limn(of: update, maxDepth: maxDepth)
 
         return originalLimn.diffed(to: updateLimn)
+    }
+
+    /// Initializes a `Limn` with the contents of and differences between two values of a given type.
+    ///
+    /// - Parameters:
+    ///   - original: The original value.
+    ///   - update: The updated value to compare to.
+    ///   - maxDepth: The maximum level of recursion to use when resolving the `Limn` of child members of the passed
+    ///     instance. Child values beyond this level will always be equal to `.omitted(reason: .maxDepthExceeded)`. The
+    ///     default value for this property is `Int.max`.     
+    public init<T>(from original: T, to update: T, maxDepth: Int = .max) {
+
+        let originalLimn = Limn(of: original, maxDepth: maxDepth)
+        let updateLimn = Limn(of: update, maxDepth: maxDepth)
+
+        self = originalLimn.diffed(to: updateLimn)
     }
 
     /// Inserts diffing information to this `Limn` based on the differences to another value.

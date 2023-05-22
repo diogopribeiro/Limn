@@ -118,13 +118,13 @@ Limn(of: UIView(), maxDepth: 3).sorted().dump(format: .init(maxItems: 4))
 > ) @ 0x00012f10e5e0
 > ```
 
-Two values can be compared using `.diff(to:)` or `Limn.diff(from:to:)`. These methods return a `Limn` instance containing both the original and updated values, which are printed as a git-style diff by default:
+Two values can be compared using `.diff(to:)` or `Limn(from:to:)`. These methods return a `Limn` instance containing both the original and updated values, which are printed as a git-style diff by default:
 
 ```swift
 let before = Player(name: "Tomas", highScore: 17126, history: [12703, 11945, 17126])
 let after = Player(name: "Tomas", highScore: 17399, history: [12703, 11945, 17126, 17399])
 
-Limn.diff(from: before, to: after).dump()
+Limn(from: before, to: after).dump()
 ```
 > ```diff
 >   Player(
@@ -238,7 +238,7 @@ Other minor features include support for undiffing and sorting of (non-indexed) 
 
 Limn can be added to your project using [Swift Package Manager](https://www.swift.org/package-manager/), [CocoaPods](https://cocoapods.org/) or as an Xcode subproject.
 
-To import Limn with [Cocoapods](https://cocoapods.org/), add the following dependency to your `Podfile`:
+To import Limn with Cocoapods, add the following dependency to your `Podfile`:
 
 ```podspec
 pod 'Limn'
@@ -248,7 +248,7 @@ pod 'Limn'
 
 #### `CustomLimnRepresentable`
 
-The representation of a type (and its children) can be fully customized in case you're not happy with the defaults. By conforming the desired type to the `CustomLimnRepresentable` protocol you can:
+The representation of a type and its children can be fully customized in case you're not happy with the defaults. By conforming the desired type to the `CustomLimnRepresentable` protocol you can:
 
 - Adjust its type name by implementing the static property `customLimnTypeName`;
 - Return a fully customized `Limn` for an instance by implementing method `customLimn(defaultLimn:context:)`.
@@ -285,7 +285,9 @@ Limn provides [several implementations](Sources/Limn/Customization/BuiltIn/) of 
 
 #### `DumpFormat`
 
-The default output format used by `.dump()` and `.stringDump()` can be modified by adjusting properties of `Limn.DumpFormat.default` (e.g. `Limn.DumpFormat.default.maxItems = 4`). To create a reusable format, add an extension of `Limn.DumpFormat` and declare your style as a static property returning `Self`. This format can then be passed to methods `.dump(format:)` and `.stringDump(format:)`.
+The default output format used by `.dump()` and `.stringDump()` can be modified by adjusting properties of `Limn.DumpFormat.default` (e.g. `Limn.DumpFormat.default.maxItems = 4`).
+
+To create a reusable format, add an extension of `Limn.DumpFormat` and declare your style as a static property returning `Self`. This format can then be passed to methods `.dump(format:)` and `.stringDump(format:)`.
 
 ## Known issues and limitations
 

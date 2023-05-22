@@ -30,7 +30,7 @@ extension Limn {
 
     init<V>(of value: V, mirror: Mirror? = nil, context: InitContext) {
 
-        let defaultLimn = { () -> Limn in
+        let makeDefaultLimn = { () -> Limn in
 
             let mirror = mirror ?? Mirror(reflecting: value)
 
@@ -68,15 +68,15 @@ extension Limn {
             }
         }
 
-        let customLimn = { () -> Limn? in
+        let makeCustomLimn = { () -> Limn? in
 
             guard let customLimnRepresentable = value as? CustomLimnRepresentable else {
                 return nil
             }
 
-            let lazyDefaultLimn = LazyBox(defaultLimn)
+            let lazyDefaultLimn = LazyBox(makeDefaultLimn)
             let customLimn = customLimnRepresentable.customLimn(
-                defaultLimn: lazyDefaultLimn.valueFromClosure,
+                defaultLimn: { lazyDefaultLimn.value },
                 context: context
             )
 
@@ -90,7 +90,7 @@ extension Limn {
             return customLimn
         }
 
-        self = customLimn() ?? defaultLimn()
+        self = makeCustomLimn() ?? makeDefaultLimn()
     }
 
     init<V>(ofClass value: V, mirror: Mirror, context: InitContext) {
@@ -104,7 +104,7 @@ extension Limn {
 
         let name = Self.typeName(of: value)
         let address = Self.address(of: value as AnyObject)
-        let swiftProperties = Self.allClassProperties(from: mirror)
+        let swiftProperties = Self.classProperties(from: mirror)
         let objcProperties = (value as? NSObject).map(ObjCRuntime.ivars(for:))
 
         guard context.currentDepth != context.maxDepth else {
