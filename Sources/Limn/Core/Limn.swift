@@ -1,6 +1,6 @@
 /// A representation of the substructure, display style and values of an instance of any type.
 ///
-/// To customize the `Limn` representation of a type, add conformance to the `CustomLimnRepresentable` protocol.
+/// To customize the `Limn` representation of a type, add conformance to the ``CustomLimnRepresentable`` protocol.
 public indirect enum Limn: Hashable, Codable {
 
     public enum OmittedReason: Codable {
