@@ -83,36 +83,36 @@ extension Limn {
         return formatted
     }
 
-    var partiallyQualifiedTypeNames: [String] {
+    var nonFullyQualifiedTypeNames: [String] {
 
         switch self {
         case .class(name: let name, _, properties: let properties):
             return (Self.isFullyQualifiedTypeName(name) ? [] : [name]) +
-                properties.flatMap(\.value.partiallyQualifiedTypeNames)
+                properties.flatMap(\.value.nonFullyQualifiedTypeNames)
 
         case .collection(elements: let elements):
-            return elements.flatMap(\.partiallyQualifiedTypeNames)
+            return elements.flatMap(\.nonFullyQualifiedTypeNames)
 
         case .dictionary(keyValuePairs: let keyValuePairs):
-            return keyValuePairs.flatMap(\.key.partiallyQualifiedTypeNames) +
-                keyValuePairs.flatMap(\.value.partiallyQualifiedTypeNames)
+            return keyValuePairs.flatMap(\.key.nonFullyQualifiedTypeNames) +
+                keyValuePairs.flatMap(\.value.nonFullyQualifiedTypeNames)
 
         case .enum(name: let name, _, associatedValue: let associatedValue):
             return (Self.isFullyQualifiedTypeName(name) ? [] : [name]) +
-                (associatedValue?.partiallyQualifiedTypeNames ?? [])
+                (associatedValue?.nonFullyQualifiedTypeNames ?? [])
 
         case .optional(value: let value):
-            return value?.partiallyQualifiedTypeNames ?? []
+            return value?.nonFullyQualifiedTypeNames ?? []
 
         case .set(elements: let elements):
-            return elements.flatMap(\.partiallyQualifiedTypeNames)
+            return elements.flatMap(\.nonFullyQualifiedTypeNames)
 
         case .struct(name: let name, properties: let properties):
             return (Self.isFullyQualifiedTypeName(name) ? [] : [name]) +
-                properties.flatMap(\.value.partiallyQualifiedTypeNames)
+                properties.flatMap(\.value.nonFullyQualifiedTypeNames)
 
         case .tuple(elements: let elements):
-            return elements.flatMap(\.value.partiallyQualifiedTypeNames)
+            return elements.flatMap(\.value.nonFullyQualifiedTypeNames)
 
         case .value,
              .omitted:

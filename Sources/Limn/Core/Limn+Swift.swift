@@ -81,9 +81,9 @@ extension Limn {
             )
 
             assert(
-                (value is NSObject) || customLimn.partiallyQualifiedTypeNames.isEmpty,
+                (value is NSObject) || customLimn.nonFullyQualifiedTypeNames.isEmpty,
                 "The following type names from CustomLimnRepresentable implementations are not fully qualified: " +
-                "'\(customLimn.partiallyQualifiedTypeNames.joined(separator: "', '"))'. Please make sure that all " +
+                "'\(customLimn.nonFullyQualifiedTypeNames.joined(separator: "', '"))'. Please make sure that all " +
                 "type names are fully qualified."
             )
 
