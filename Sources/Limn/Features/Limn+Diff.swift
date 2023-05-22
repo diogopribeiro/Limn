@@ -83,14 +83,31 @@ extension Limn {
     ///   - update: The updated value to compare to.
     ///   - maxDepth: The maximum level of recursion to use when resolving the `Limn` of child members of the passed
     ///     instance. Child values beyond this level will always be equal to `.omitted(reason: .maxDepthExceeded)`. The
-    ///     default value for this property is `Int.max`.     
+    ///     default value for this property is `Int.max`.
     /// - Returns: A `Limn` with the contents of and differences between the two values.
+    @available(*, deprecated, message: "Use `init(from:to:) instead`")
     public static func diff<T>(from original: T, to update: T, maxDepth: Int = .max) -> Limn {
 
         let originalLimn = Limn(of: original, maxDepth: maxDepth)
         let updateLimn = Limn(of: update, maxDepth: maxDepth)
 
         return originalLimn.diffed(to: updateLimn)
+    }
+
+    /// Initializes a `Limn` with the contents of and differences between two values of a given type.
+    ///
+    /// - Parameters:
+    ///   - original: The original value.
+    ///   - update: The updated value to compare to.
+    ///   - maxDepth: The maximum level of recursion to use when resolving the `Limn` of child members of the passed
+    ///     instance. Child values beyond this level will always be equal to `.omitted(reason: .maxDepthExceeded)`. The
+    ///     default value for this property is `Int.max`.     
+    public init<T>(from original: T, to update: T, maxDepth: Int = .max) {
+
+        let originalLimn = Limn(of: original, maxDepth: maxDepth)
+        let updateLimn = Limn(of: update, maxDepth: maxDepth)
+
+        self = originalLimn.diffed(to: updateLimn)
     }
 
     /// Inserts diffing information to this `Limn` based on the differences to another value.

@@ -7,7 +7,7 @@ final class LazyBox<T> {
         self.makeInstance = makeInstance
     }
 
-    func valueFromClosure() -> T {
+    var value: T {
 
         instance ?? {
             let newInstance = makeInstance()

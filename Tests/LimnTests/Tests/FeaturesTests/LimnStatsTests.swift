@@ -8,7 +8,7 @@ final class LimnStatsTests: XCTestCase {
 
         let modelBefore = SwiftClass.diffedComplexInstance_before
         let modelAfter = SwiftClass.diffedComplexInstance_after
-        let modelLimn = Limn.diff(from: modelBefore, to: modelAfter)
+        let modelLimn = Limn(from: modelBefore, to: modelAfter)
 
         XCTAssertEqual(
             modelLimn.stats().diffedEntriesCount,

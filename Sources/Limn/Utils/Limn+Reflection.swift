@@ -41,7 +41,7 @@ extension Limn {
 
     // MARK: - Internal methods
 
-    static func allClassProperties(from mirror: Mirror) -> [Mirror.Child] {
+    static func classProperties(from mirror: Mirror) -> [Mirror.Child] {
 
         guard mirror.displayStyle == .class else {
             assertionFailure()

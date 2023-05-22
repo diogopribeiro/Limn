@@ -277,7 +277,7 @@ final class LimnDumpTests: XCTestCase {
 
         let beforeInstance = SwiftClass.diffedComplexInstance_before
         let afterInstance = SwiftClass.diffedComplexInstance_after
-        let limn = Limn.diff(from: beforeInstance, to: afterInstance)
+        let limn = Limn(from: beforeInstance, to: afterInstance)
         let narrowOutput = limn.stringDump(format: .testNarrowDumpFormat)
 
         XCTAssertEqual(

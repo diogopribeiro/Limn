@@ -10,7 +10,7 @@ final class LimnDiffTests: XCTestCase {
 
         let classA = SwiftClass.Simple()
         let classB = SwiftClass.Simple()
-        let diffAB = Limn.diff(from: classA, to: classB)
+        let diffAB = Limn(from: classA, to: classB)
 
         XCTAssertTrue(diffAB.containsDiff)
 
@@ -63,8 +63,8 @@ final class LimnDiffTests: XCTestCase {
 
         let collectionA = [   2, 3, 4, 5]
         let collectionB = [1, 2, 9, 4]
-        let diffAB = Limn.diff(from: collectionA, to: collectionB)
-        let diffBA = Limn.diff(from: collectionB, to: collectionA)
+        let diffAB = Limn(from: collectionA, to: collectionB)
+        let diffBA = Limn(from: collectionB, to: collectionA)
 
         XCTAssertTrue(diffAB.containsDiff)
         XCTAssertTrue(diffBA.containsDiff)
@@ -97,8 +97,8 @@ final class LimnDiffTests: XCTestCase {
 
         let collectionC: [AnyHashable] = [1, 2, [5, 6   ], 4]
         let collectionD: [AnyHashable] = [1, 2, [   6, 7], 4]
-        let diffCD = Limn.diff(from: collectionC, to: collectionD)
-        let diffDC = Limn.diff(from: collectionD, to: collectionC)
+        let diffCD = Limn(from: collectionC, to: collectionD)
+        let diffDC = Limn(from: collectionD, to: collectionC)
 
         XCTAssertTrue(diffCD.containsDiff)
         XCTAssertTrue(diffDC.containsDiff)
@@ -140,8 +140,8 @@ final class LimnDiffTests: XCTestCase {
 
         let dictionaryA = [        2:  "2", 23: "24", 4: "4", 5: "5"]
         let dictionaryB = [1: "1", 2: "56", 25: "24", 4: "4"        ]
-        let diffAB = Limn.diff(from: dictionaryA, to: dictionaryB)
-        let diffBA = Limn.diff(from: dictionaryB, to: dictionaryA)
+        let diffAB = Limn(from: dictionaryA, to: dictionaryB)
+        let diffBA = Limn(from: dictionaryB, to: dictionaryA)
 
         XCTAssertTrue(diffAB.containsDiff)
         XCTAssertTrue(diffBA.containsDiff)
@@ -222,7 +222,7 @@ final class LimnDiffTests: XCTestCase {
 
         var enumA = SwiftEnum.complexEnum_firstCase.instance
         var enumB = SwiftEnum.ComplexEnum.firstCase
-        var diffAB = Limn.diff(from: enumA, to: enumB)
+        var diffAB = Limn(from: enumA, to: enumB)
 
         XCTAssertFalse(diffAB.containsDiff)
 
@@ -232,7 +232,7 @@ final class LimnDiffTests: XCTestCase {
         )
 
         enumB = SwiftEnum.complexEnum_secondCase.instance
-        diffAB = Limn.diff(from: enumA, to: enumB)
+        diffAB = Limn(from: enumA, to: enumB)
 
         XCTAssertEqualLimns(
             diffAB,
@@ -243,7 +243,7 @@ final class LimnDiffTests: XCTestCase {
         )
 
         enumA = SwiftEnum.ComplexEnum.secondCase((.firstCase, secondLabel: ["Hello", "Worlds!"]))
-        diffAB = Limn.diff(from: enumA, to: enumB)
+        diffAB = Limn(from: enumA, to: enumB)
 
         XCTAssertEqualLimns(
             diffAB,
@@ -268,7 +268,7 @@ final class LimnDiffTests: XCTestCase {
 
         var optionalA: String? = ""
         var optionalB: String? = nil
-        var diffAB = Limn.diff(from: optionalA, to: optionalB)
+        var diffAB = Limn(from: optionalA, to: optionalB)
 
         XCTAssertTrue(diffAB.containsDiff)
 
@@ -281,7 +281,7 @@ final class LimnDiffTests: XCTestCase {
         )
 
         optionalA = nil
-        diffAB = Limn.diff(from: optionalA, to: optionalB)
+        diffAB = Limn(from: optionalA, to: optionalB)
 
         XCTAssertEqualLimns(
             diffAB,
@@ -290,7 +290,7 @@ final class LimnDiffTests: XCTestCase {
 
         optionalA = "1"
         optionalB = "2"
-        diffAB = Limn.diff(from: optionalA, to: optionalB)
+        diffAB = Limn(from: optionalA, to: optionalB)
 
         XCTAssertEqualLimns(
             diffAB,
@@ -307,8 +307,8 @@ final class LimnDiffTests: XCTestCase {
 
         let setA = Set<AnyHashable>([   [2, 9], [3, 23], 4, 5])
         let setB = Set<AnyHashable>([1, [2, 9], [3, 25], 4   ])
-        let diffAB = Limn.diff(from: setA, to: setB)
-        let diffBA = Limn.diff(from: setB, to: setA)
+        let diffAB = Limn(from: setA, to: setB)
+        let diffBA = Limn(from: setB, to: setA)
 
         XCTAssertTrue(diffAB.containsDiff)
         XCTAssertTrue(diffBA.containsDiff)
@@ -372,7 +372,7 @@ final class LimnDiffTests: XCTestCase {
 
         var structA = SwiftStruct.Simple()
         let StructB = SwiftStruct.Simple()
-        let diffAB = Limn.diff(from: structA, to: StructB)
+        let diffAB = Limn(from: structA, to: StructB)
 
         XCTAssertFalse(diffAB.containsDiff)
 
@@ -410,7 +410,7 @@ final class LimnDiffTests: XCTestCase {
         let tupleA: (String, Int) = ("1", 2)
         let tupleB: (firstLabel: String, Int) = (firstLabel: "1", 2)
 
-        let diffAA = Limn.diff(from: tupleA, to: tupleA)
+        let diffAA = Limn(from: tupleA, to: tupleA)
 
         XCTAssertFalse(diffAA.containsDiff)
 
@@ -478,7 +478,7 @@ final class LimnDiffTests: XCTestCase {
 
         var valueA: Any = "Test"
         var valueB: Any = "Test"
-        var diffAB = Limn.diff(from: valueA, to: valueB)
+        var diffAB = Limn(from: valueA, to: valueB)
 
         XCTAssertFalse(diffAB.containsDiff)
 
@@ -488,7 +488,7 @@ final class LimnDiffTests: XCTestCase {
         )
 
         valueB = nil as String? as Any
-        diffAB = Limn.diff(from: valueA, to: valueB)
+        diffAB = Limn(from: valueA, to: valueB)
 
         XCTAssertTrue(diffAB.containsDiff)
 
@@ -502,7 +502,7 @@ final class LimnDiffTests: XCTestCase {
 
         valueA = 2
         valueB = SwiftClass.simple.instance
-        let diffBA = Limn.diff(from: valueB, to: valueA)
+        let diffBA = Limn(from: valueB, to: valueA)
 
         XCTAssertTrue(diffBA.containsDiff)
 
