@@ -28,8 +28,8 @@ extension Limn {
         var limnValue: Limn {
 
             // A `Limn` for this struct will be created manually as it will store other existing Limns. Using the
-            // default `Limn(of:)` initializer would create a Limn describing another Limn. It's also not possible to
-            // store `nil` properties in a `Limn` (by design), so we'll manually omit `nil` values instead.
+            // default `Limn(of:)` initializer would create a Limn describing another Limn. It's also not possible (by
+            // design) to store `nil` properties in a `Limn`, so we'll manually omit `nil` values instead.
 
             let name = typeName(of: self)
             var properties = [LabeledLimn]()
