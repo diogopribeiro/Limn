@@ -11,6 +11,7 @@ Limn is a Swift library for inspecting and comparing values in Swift and Objecti
 1. [Customization](#customization)
 1. [Known issues and limitations](#known-issues-and-limitations)
 1. [Contributing](#contributing)
+1. [Related projects](#related-projects)
 1. [License](#license)
 
 ## Overview
@@ -305,6 +306,10 @@ The default output format used by `.dump()` and `.stringDump()` can be modified 
 
 All contributions are welcome! You can open a discussion first if you wish to talk about some topic prior to the development and submission.
 Please try to match the existing code style if you open a PR.
+
+## Related projects
+
+Some concepts and ideas in this library expand on the excellent [swift-custom-dump](https://github.com/pointfreeco/swift-custom-dump) by [@pointfreeco](https://github.com/pointfreeco).
 
 ## License
 
