@@ -29,7 +29,7 @@ extension Limn {
 
     /// Gathers statistics for the current `Limn`.
     ///
-    /// - Returns: The `Limn.Stats` instance or this `Limn`.
+    /// - Returns: The ``Limn/Stats`` instance for this `Limn`.
     public func stats() -> Stats {
 
         var context = StatsContext()

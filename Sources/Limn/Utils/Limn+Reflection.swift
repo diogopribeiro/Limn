@@ -10,8 +10,8 @@ extension Limn {
     /// Bear in mind this method will not work as expected on Objective-C types by default due to limitations of this
     /// language.
     ///
-    /// If you wish to change the default value, make your desired type conform to `CustomLimnRepresentable` and
-    /// implement `customLimnTypeName`.
+    /// If you wish to change the default value, make your desired type conform to ``CustomLimnRepresentable`` and
+    /// implement ``CustomLimnRepresentable/customLimnTypeName``.
     ///
     /// - Parameter value: The instance to get the type name of.
     /// - Returns: The fully qualified name of the given instance.
