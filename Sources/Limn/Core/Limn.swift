@@ -3,12 +3,13 @@
 /// To customize the `Limn` representation of a type, add conformance to the ``CustomLimnRepresentable`` protocol.
 public indirect enum Limn: Hashable, Codable {
 
+    /// The reason why an instance was omitted from a `Limn` hierarchy.
     public enum OmittedReason: Codable {
 
-        /// Type was filtered out.
+        /// Instance was filtered out.
         case filtered
 
-        /// `Limn` was unable to parse the type.
+        /// `Limn` was unable to parse the instance.
         case unresolved
 
         /// Maximum recursion level was exceeded while obtaining the `Limn` of a child member.

@@ -63,7 +63,7 @@ extension Limn {
     private var sortComparisonString: String {
 
         switch self {
-        case .class(name: let name, address: let address, _):
+        case .class(name: let name, address: let address, properties: _):
             return "\(name).\(address).\(hashValue)"
 
         case .collection:
@@ -72,7 +72,7 @@ extension Limn {
         case .dictionary:
             return "[:].\(hashValue)"
 
-        case .enum(name: let name, caseName: let caseName, _):
+        case .enum(name: let name, caseName: let caseName, associatedValue: _):
             return "\(name).\(caseName).\(hashValue)"
 
         case .optional(value: let value):
@@ -85,7 +85,7 @@ extension Limn {
             let diff = diffValue
             return diff?.original?.sortComparisonString ?? diff?.update?.sortComparisonString ?? ""
 
-        case .struct(name: let name, _):
+        case .struct(name: let name, properties: _):
             return "\(name).\(hashValue)"
 
         case .tuple:

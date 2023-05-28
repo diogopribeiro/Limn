@@ -61,8 +61,8 @@ extension Limn {
         ///     element. The default value is `Int.max`.
         ///   - typeNameComponents: The components to include when printing type names. The default value is
         ///     `[.genericTypeParameterNames]`.
-        ///   - symbols: The list of symbols to use when writing items to the output. The default is
-        ///     `DumpSymbols.default`.
+        ///   - symbols: The list of symbols to use when writing items to the output. The default value is
+        ///     ``Limn/Limn/DumpSymbols/default``.
         public init(
             maxItems: Int = .max,
             maxLineWidth: Int = 0,
